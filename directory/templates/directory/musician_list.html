@@ -1,0 +1,39 @@
+{% extends 'directory/base.html' %}
+
+{% block content %}
+<h1>Music Industry</h1>
+<a href="{% url 'add_musician' %}" class="btn btn-primary mb-3">Add Musician</a>
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+            <th>ID</th>
+            <th>Musician Name</th>
+            <th>Email</th>
+            <th>Album Rating</th>
+            <th>Instrument Type</th>
+            <th>Album Name</th>
+            <th>Release Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for musician in musicians %}
+            {% for album in musician.albums.all %}
+                <tr>
+                    <td>{{ musician.id }}</td>
+                    <td><a href="{% url 'musician_detail' musician.pk %}">{{ musician.first_name }} {{ musician.last_name }}</a></td>
+                    <td>{{ musician.email }}</td>
+                    <td>{{ album.rating }}</td>
+                    <td>{{ musician.instrument_type }}</td>
+                    <td>{{ album.name }}</td>
+                    <td>{{ album.release_date }}</td>
+                    <td>
+                        <a href="{% url 'album_detail' album.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete_album' album.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
